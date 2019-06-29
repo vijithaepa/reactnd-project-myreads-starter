@@ -13,7 +13,7 @@ class BooksApp extends React.Component {
             wantToRead: [{title: '', authors: [], imageLinks: {smallThumbnail: ''}}],
             read: [{title: '', authors: [], imageLinks: {smallThumbnail: ''}}]
         }
-    }
+    };
 
     componentDidMount() {
         BooksAPI.getAll()
@@ -30,19 +30,19 @@ class BooksApp extends React.Component {
             })
     }
 
-    onChangeShelf = (newShelf, book) => {
+    onChangeShelf = (curShelf, book) => {
         this.setState((curState) => {
             // use a copy and assign to state as a whole
-            const newBooks = curState.books
+            const newBooks = curState.books;
             for (let [key] of Object.entries(newBooks)) {
                 // Adding the new book to the shelf
-                if (newShelf === key) {
-                    newBooks[key] = [...curState.books[newShelf], book]
+                if (book.shelf === key) {
+                    newBooks[key] = [...curState.books[book.shelf], book]
                 }
 
                 // Removing from the old shelf
-                if (book.shelf === key || book.shelf === "none") {
-                    newBooks[key] = curState.books[book.shelf].filter(b => b.id !== book.id)
+                if (curShelf === key) {
+                    newBooks[key] = curState.books[curShelf].filter(b => b.id !== book.id)
                 }
             }
 
@@ -55,14 +55,12 @@ class BooksApp extends React.Component {
                 //
                 // }
             }
-        })
+        });
 
-        BooksAPI.update(book, newShelf)
-            .then(data => {
-                // console.log("Data ", data)
+        // This could possibly be done at teh Book level. Need an advice
+        BooksAPI.update(book, book.shelf)
 
-            })
-    }
+    };
 
     render() {
         return (

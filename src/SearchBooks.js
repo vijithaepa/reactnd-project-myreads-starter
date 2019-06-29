@@ -12,9 +12,25 @@ export default class SearchBooks extends Component {
     searchBooks = (e) => {
         BooksAPI.search(e.target.value)
             .then(books => {
-                this.setState(() => (
-                    {books}
+                if (books.error) {
+                    console.log("Error on search : ", books.error)
+                    this.setState(() => (
+                        {books: []}
                     ))
+                } else {
+                    const searched = books.map(item => {
+                        return {
+                            id: item.id,
+                            authors: item.authors,
+                            imageLinks: item.imageLinks,
+                            shelf: this.getTheShelf(item)
+                        }
+                    })
+                    this.setState(() => (
+                        {books: searched}
+                    ))
+                }
+
             })
     }
 
@@ -67,7 +83,6 @@ export default class SearchBooks extends Component {
                             {this.state.books.map((book, index) => (
                                 <li key={index}>
                                     <Book book={book}
-                                          shelf={this.getTheShelf(book)}
                                           onChangeShelf={this.props.onChangeShelf}/>
                                 </li>
                             ))}

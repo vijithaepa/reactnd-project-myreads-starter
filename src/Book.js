@@ -3,8 +3,10 @@ import React from 'react'
 export const Book = (props) => {
 
     const onMoveToNewShelf = (newShelf) => {
-        props.onChangeShelf(newShelf, props.book)
-    }
+        let curShelf = props.book.shelf;
+        props.book.shelf = newShelf;
+        props.onChangeShelf(curShelf, props.book)
+    };
 
     return (
         <div className="book">
@@ -14,7 +16,7 @@ export const Book = (props) => {
                     height: 193,
                     backgroundImage: `url(${props.book.imageLinks.smallThumbnail})`
                 }}/>
-                <Option shelf={props.shelf ? props.shelf: props.book.shelf}
+                <Option shelf={props.book.shelf}
                         onChangeShelf={onMoveToNewShelf}/>
             </div>
             <div className="book-title">{props.book.title}</div>
@@ -23,7 +25,7 @@ export const Book = (props) => {
             ))}</div>
         </div>
     )
-}
+};
 
 const Option = (props) => (
     <div className="book-shelf-changer">
@@ -35,7 +37,7 @@ const Option = (props) => (
             <option value="none">None</option>
         </select>
     </div>
-)
+);
 
 // Book.propTypes = {
 //     book: PropTypes.object.required,

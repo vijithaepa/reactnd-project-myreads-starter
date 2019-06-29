@@ -13,15 +13,12 @@ export const BookRack = (props) => {
                 <div>
                     <Shelf title={"Currently Reading"}
                            books={props.books.currentlyReading}
-                           shelf={"currentlyReading"}
                            onChangeShelf={props.onChangeShelf}/>
                     <Shelf title={"Want to Read"}
                            books={props.books.wantToRead}
-                           shelf={"wantToRead"}
                            onChangeShelf={props.onChangeShelf}/>
                     <Shelf title={"Read"}
                            books={props.books.read}
-                           shelf={"read"}
                            onChangeShelf={props.onChangeShelf}/>
                 </div>
             </div>
