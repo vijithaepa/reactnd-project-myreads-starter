@@ -97,8 +97,3 @@ export default class SearchBooks extends Component {
     }
 
 }
-
-
-// SearchBooks.propTypes = {
-//     addItem: PropTypes.func.isRequired
-// }
