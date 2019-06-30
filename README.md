@@ -1,17 +1,17 @@
 # MyReads Project
 
-This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
-
-Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
+This is the final product for the final assessment project for Udacity's React Fundamentals course. 
 
 ## TL;DR
 
-To get started developing right away:
+To run the application:
 
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
+* start a browser and type the url `http://localhost:3000/`
+* Functionality is detailed in the following [rubric link](https://review.udacity.com/#!/rubrics/918/view)
 
-## What You're Getting
+## What's in the project
 ```bash
 ├── CONTRIBUTING.md
 ├── README.md - This file.
@@ -25,6 +25,11 @@ To get started developing right away:
     ├── App.js # This is the root of your app. Contains static HTML right now.
     ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
     ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
+    ├── Book.js         # Component for render book and it's options to move shelves
+    ├── BookRack.js     # Components hold Shelves
+    ├── BooksGrid.js    # Component to render grid of books
+    ├── SearchBooks.js  # Component provide search functionality and render the result of books
+    ├── Shelf.js        # Component to render books under it's shelf title
     ├── icons # Helpful images for your app. Use at your discretion.
     │   ├── add.svg
     │   ├── arrow-back.svg
@@ -33,6 +38,8 @@ To get started developing right away:
     └── index.js # You should not need to modify this file. It is used for DOM rendering only.
 ```
 
+
+# Below are the original comments made in the Template
 Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
 
 ## Backend Server
