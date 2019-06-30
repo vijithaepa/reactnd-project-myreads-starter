@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom'
 import { BookRack } from "./BookRack";
 import SearchBooks from "./SearchBooks";
 
-
 class BooksApp extends React.Component {
     state = {
         books: {
@@ -32,32 +31,23 @@ class BooksApp extends React.Component {
 
     onChangeShelf = (curShelf, book) => {
         this.setState((curState) => {
-            // use a copy and assign to state as a whole
-            const newBooks = curState.books;
-            for (let [key] of Object.entries(newBooks)) {
-                // Adding the new book to the shelf
-                if (book.shelf === key) {
-                    newBooks[key] = [...curState.books[book.shelf], book]
-                }
 
-                // Removing from the old shelf
-                if (curShelf === key) {
-                    newBooks[key] = curState.books[curShelf].filter(b => b.id !== book.id)
-                }
-            }
+            // Clone the books as to reserve the state of the rest of the shelf/shelves
+            const newBooks = curState.books;
+
+            // Adding the new book to the shelf
+            if (book.shelf !== 'none')
+                newBooks[book.shelf] = [...curState.books[book.shelf], book]
+            // Removing from the old shelf
+            if (curShelf !== 'none')
+                newBooks[curShelf] = curState.books[curShelf].filter(b => b.id !== book.id)
 
             return {
                 books: newBooks
-                // TODO: to verify- below method will leave the other shelf empty as this override the whole state
-                // {
-                //     [newShelf]: [...curState.books[newShelf], book],
-                //     [book.shelf]: curState.books[book.shelf].filter(b => b.id !== book.id),
-                //
-                // }
             }
         });
 
-        // This could possibly be done at teh Book level. Need an advice
+        // This could possibly be done at the Book level. Need an advice
         BooksAPI.update(book, book.shelf)
 
     };

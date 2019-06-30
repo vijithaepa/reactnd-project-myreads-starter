@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import * as BooksAPI from './BooksAPI'
-import { Book } from "./Book";
+import { BooksGrid } from "./BooksGrid";
 
+// Component to search books and render the resulted books in a Grid.
 export default class SearchBooks extends Component {
 
     state = {
-        books: [],      // {title: '', authors: [], imageLinks: {smallThumbnail: ''}, shelf:'none'}
+        books: [],      // format of : {title: '', authors: [], imageLinks: {smallThumbnail: ''}, shelf:'none'}
     }
 
     searchBooks = (e) => {
@@ -76,21 +77,9 @@ export default class SearchBooks extends Component {
 
                     </div>
                 </div>
-                <div className="bookshelf">
-                    <h2 className="bookshelf-title">Search Result</h2>
-                    <div className="bookshelf-books">
-                        <ol className="books-grid">
-                            {this.state.books.map((book, index) => (
-                                <li key={index}>
-                                    <Book book={book}
-                                          onChangeShelf={this.props.onChangeShelf}/>
-                                </li>
-                            ))}
-                        </ol>
-                    </div>
-                </div>
                 <div className="search-books-results">
-                    <ol className="books-grid"></ol>
+                    <BooksGrid books={this.state.books}
+                               onChangeShelf={this.props.onChangeShelf}/>
                 </div>
             </div>
         )

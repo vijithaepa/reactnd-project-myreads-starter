@@ -1,20 +1,14 @@
 import React from 'react'
-import { Book } from "./Book";
+import { BooksGrid } from "./BooksGrid";
 
+// Holds Books for it's title.
 export const Shelf = (props) => {
     return (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{props.title}</h2>
             <div className="bookshelf-books">
-                <ol className="books-grid">
-                    {props.books.map((book, index) => (
-                        <li key={index}>
-                            <Book book={book}
-                                  shelf={props.shelf}
-                                  onChangeShelf={props.onChangeShelf}/>
-                        </li>
-                    ))}
-                </ol>
+                <BooksGrid books={props.books}
+                           onChangeShelf={props.onChangeShelf}/>
             </div>
         </div>
     )

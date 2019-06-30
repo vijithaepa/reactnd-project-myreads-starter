@@ -2,6 +2,7 @@ import React from 'react'
 import { Shelf } from "./Shelf";
 import { Link } from "react-router-dom";
 
+// Holds Book shelves.
 export const BookRack = (props) => {
 
     return (

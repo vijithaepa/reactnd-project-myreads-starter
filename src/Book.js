@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Component to render a book with it's actions to move between shelves.
 export const Book = (props) => {
 
     const onMoveToNewShelf = (newShelf) => {
