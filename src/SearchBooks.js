@@ -13,7 +13,6 @@ export default class SearchBooks extends Component {
     searchBooks = (e) => {
         BooksAPI.search(e.target.value)
             .then(books => {
-                console.log("Books ", books)
                 if(books === undefined) {
                     console.log("No result found")
                     this.setState(() => (
