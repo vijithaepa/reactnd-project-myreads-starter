@@ -22,8 +22,8 @@ export default class SearchBooks extends Component {
                     const searched = books.map(item => {
                         return {
                             id: item.id,
-                            authors: item.authors,
-                            imageLinks: item.imageLinks,
+                            authors: item.authors ? item.authors: [],
+                            imageLinks: item.imageLinks ? item.imageLinks: {smallThumbnail: ''},
                             shelf: this.getTheShelf(item)
                         }
                     })
