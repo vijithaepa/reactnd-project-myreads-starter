@@ -1,5 +1,5 @@
 import React from 'react'
-import { Shelf } from "./Shelf";
+import { getValue, Shelf, Shelves } from "./Shelf";
 import { Link } from "react-router-dom";
 
 // Holds Book shelves.
@@ -12,13 +12,13 @@ export const BookRack = (props) => {
             </div>
             <div className="list-books-content">
                 <div>
-                    <Shelf title={"Currently Reading"}
+                    <Shelf title={getValue(Shelves.currentlyReading)}
                            books={props.books.currentlyReading}
                            onChangeShelf={props.onChangeShelf}/>
-                    <Shelf title={"Want to Read"}
+                    <Shelf title={getValue(Shelves.wantToRead)}
                            books={props.books.wantToRead}
                            onChangeShelf={props.onChangeShelf}/>
-                    <Shelf title={"Read"}
+                    <Shelf title={getValue(Shelves.read)}
                            books={props.books.read}
                            onChangeShelf={props.onChangeShelf}/>
                 </div>

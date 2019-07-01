@@ -1,4 +1,5 @@
 import React from 'react'
+import { getKey, Shelves } from "./Shelf";
 
 // Component to render a book with it's actions to move between shelves.
 export const Book = (props) => {
@@ -15,13 +16,13 @@ export const Book = (props) => {
                 <div className="book-cover" style={{
                     width: 128,
                     height: 193,
-                    backgroundImage: `url(${props.book.imageLinks.smallThumbnail})`
+                    backgroundImage: `url(${props.book.imageLinks ? props.book.imageLinks.smallThumbnail : {smallThumbnail: ''}})`
                 }}/>
                 <Option shelf={props.book.shelf}
                         onChangeShelf={onMoveToNewShelf}/>
             </div>
             <div className="book-title">{props.book.title}</div>
-            <div className="book-authors">{props.book.authors.map((auth, index) => (
+            <div className="book-authors">{(props.book.authors ? props.book.authors : []).map((auth, index) => (
                 <span key={index}>{(index ? ', ' : '') + auth}</span>
             ))}</div>
         </div>
@@ -32,9 +33,9 @@ const Option = (props) => (
     <div className="book-shelf-changer">
         <select value={props.shelf} onChange={value => props.onChangeShelf(value.target.value)}>
             <option value="move" disabled>Move to...</option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
+            <option value={getKey(Shelves.currentlyReading)}>Currently Reading</option>
+            <option value={getKey(Shelves.wantToRead)}>Want to Read</option>
+            <option value={getKey(Shelves.read)}>Read</option>
             <option value="none">None</option>
         </select>
     </div>

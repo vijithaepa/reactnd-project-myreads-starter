@@ -16,6 +16,17 @@ export const Shelf = (props) => {
 
 }
 
+export const Shelves = {
+    currentlyReading: ['currentlyReading', 'Currently Reading'],
+    wantToRead: ['wantToRead', 'Want to Read'],
+    read: ['read', 'Read']
+}
+
+export const getKey = ([key, value]) => (key)
+
+export const getValue = ([key, value]) => (value)
+
+
 // Shelf.propTypes = {
 //     title: PropTypes.string.isRequired,
 //     books: PropTypes.object.required,

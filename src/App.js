@@ -4,6 +4,7 @@ import './App.css'
 import { Route } from 'react-router-dom'
 import { BookRack } from "./BookRack";
 import SearchBooks from "./SearchBooks";
+import { getKey, Shelves } from './Shelf'
 
 class BooksApp extends React.Component {
     state = {
@@ -20,35 +21,35 @@ class BooksApp extends React.Component {
                 this.setState(() => {
                     return {
                         books: {
-                            currentlyReading: books.filter(book => (book.shelf === "currentlyReading")),
-                            wantToRead: books.filter(book => (book.shelf === "wantToRead")),
-                            read: books.filter(book => (book.shelf === "read")),
+                            currentlyReading: books.filter(book => (book.shelf === getKey(Shelves.currentlyReading))),
+                            wantToRead: books.filter(book => (book.shelf === getKey(Shelves.wantToRead))),
+                            read: books.filter(book => (book.shelf === getKey(Shelves.read))),
                         }
                     }
                 })
             })
     }
 
+
     onChangeShelf = (curShelf, book) => {
-        this.setState((curState) => {
+        BooksAPI.update(book, book.shelf).then(response => {
+            this.setState((curState) => {
 
-            // Clone the books as to reserve the state of the rest of the shelf/shelves
-            const newBooks = curState.books;
+                // Clone the books as to reserve the state of the rest of the shelf/shelves
+                const newBooks = curState.books;
 
-            // Adding the new book to the shelf
-            if (book.shelf !== 'none')
-                newBooks[book.shelf] = [...curState.books[book.shelf], book]
-            // Removing from the old shelf
-            if (curShelf !== 'none')
-                newBooks[curShelf] = curState.books[curShelf].filter(b => b.id !== book.id)
+                // Adding the new book to the shelf
+                if (book.shelf !== 'none')
+                    newBooks[book.shelf] = [...curState.books[book.shelf], book]
+                // Removing from the old shelf
+                if (curShelf !== 'none')
+                    newBooks[curShelf] = curState.books[curShelf].filter(b => b.id !== book.id)
 
-            return {
-                books: newBooks
-            }
-        });
-
-        // This could possibly be done at the Book level. Need an advice
-        BooksAPI.update(book, book.shelf)
+                return {
+                    books: newBooks
+                }
+            });
+        })
 
     };
 
@@ -72,3 +73,4 @@ class BooksApp extends React.Component {
 }
 
 export default BooksApp
+
