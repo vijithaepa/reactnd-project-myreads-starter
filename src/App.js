@@ -1,10 +1,10 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import { Route } from 'react-router-dom'
-import { BookRack } from "./BookRack";
+import {BookRack} from "./BookRack";
 import SearchBooks from "./SearchBooks";
 import { getKey, Shelves } from './Shelf'
+import {Switch, Route} from 'react-router'
 
 class BooksApp extends React.Component {
     state = {
@@ -56,17 +56,18 @@ class BooksApp extends React.Component {
     render() {
         return (
             <div className="app">
-                <Route path="/search" render={() => (
-                    <SearchBooks
-                        booksOnRack={this.state.books}
-                        onChangeShelf={this.onChangeShelf}/>
-                )}/>
-
-                <Route exact path="/" render={() => (
-                    <BookRack books={this.state.books}
-                              onChangeShelf={this.onChangeShelf}/>
-                )}
-                />
+                <Switch>
+                    <Route exact path="/" render={() => (
+                        <BookRack books={this.state.books}
+                                  onChangeShelf={this.onChangeShelf}/>
+                    )}
+                    />
+                    <Route path="/search" render={() => (
+                        <SearchBooks
+                            booksOnRack={this.state.books}
+                            onChangeShelf={this.onChangeShelf}/>
+                    )}/>
+                </Switch>
             </div>
         )
     }

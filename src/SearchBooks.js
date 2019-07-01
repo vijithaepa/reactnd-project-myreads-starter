@@ -1,55 +1,69 @@
-import React, { Component } from 'react'
-import { Link } from "react-router-dom";
+import React, {Component} from 'react'
+import {Link} from "react-router-dom";
 import * as BooksAPI from './BooksAPI'
-import { BooksGrid } from "./BooksGrid";
-import { getKey, Shelves } from "./Shelf";
+import {BooksGrid} from "./BooksGrid";
+import {getKey, Shelves} from "./Shelf";
 
 // Component to search books and render the resulted books in a Grid.
 export default class SearchBooks extends Component {
 
     state = {
         books: [],      // format of : {title: '', authors: [], imageLinks: {smallThumbnail: ''}, shelf:'none'}
-        searchError: false  //True, when an error on search result
+        searchError: false,
+        query: ''
     }
 
-    searchBooks = (e) => {
-        BooksAPI.search(e.target.value)
-            .then(books => {
-                if (books === undefined) {
-                    console.log("No result found")
-                    this.setState(() => (
-                        {
-                            books: [],
-                            searchError: false
-                        }
-                    ))
-                } else if (books.error) {
-                    console.log("Error on search : ", books.error)
-                    this.setState(() => (
-                        {
-                            books: [],
-                            searchError: true
-                        }
-                    ))
-                } else {
-                    const searched = books.map(item => {
-                        return {
-                            id: item.id,
-                            title: item.title,
-                            authors: item.authors,
-                            imageLinks: item.imageLinks,
-                            shelf: this.getTheShelf(item)
-                        }
-                    })
-                    this.setState(() => (
-                        {
-                            books: searched,
-                            searchError: false
-                        }
-                    ))
+    searchBooks = (query) => {
+        if (query.trim() === '') {
+            this.setState(() => (
+                {
+                    books: [],
+                    searchError: true
                 }
-
-            })
+            ))
+        } else {
+            this.setState(() => (
+                {query}
+            ))
+            BooksAPI.search(query)
+                .then(books => {
+                    if (books === undefined) {
+                        console.log("No result found")
+                        this.setState(() => (
+                            {
+                                books: [],
+                                searchError: true
+                            }
+                        ))
+                    } else if (books.error) {
+                        console.log("Error on search : ", books.error)
+                        this.setState(() => (
+                            {
+                                books: [],
+                                searchError: true
+                            }
+                        ))
+                    } else {
+                        if (this.state.query === query) {
+                            const searched = books.map(item => {
+                                return {
+                                    id: item.id,
+                                    title: item.title,
+                                    authors: item.authors ? item.authors : [],
+                                    imageLinks: item.imageLinks ? item.imageLinks : {smallThumbnail: ''},
+                                    shelf: this.getTheShelf(item)
+                                }
+                            })
+                            this.setState(() => (
+                                {
+                                    books: searched,
+                                    searchError: false
+                                }
+                            ))
+                        }
+                    }
+                })
+        }
     }
 
     getTheShelf = (book) => {
@@ -90,7 +104,8 @@ export default class SearchBooks extends Component {
                                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                                   you don't find a specific author or title. Every search is limited by search terms.
                                 */}
-                        <input type="text" placeholder="Search by title or author" onChange={this.searchBooks}/>
+                        <input type="text" placeholder="Search by title or author"
+                               onChange={e => this.searchBooks(e.target.value)}/>
 
                     </div>
                 </div>
