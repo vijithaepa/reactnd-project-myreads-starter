@@ -13,7 +13,7 @@ export default class SearchBooks extends Component {
     searchBooks = (e) => {
         BooksAPI.search(e.target.value)
             .then(books => {
-                if(books === undefined) {
+                if (books === undefined) {
                     console.log("No result found")
                     this.setState(() => (
                         {books: []}
@@ -27,8 +27,8 @@ export default class SearchBooks extends Component {
                     const searched = books.map(item => {
                         return {
                             id: item.id,
-                            authors: item.authors ? item.authors: [],
-                            imageLinks: item.imageLinks ? item.imageLinks: {smallThumbnail: ''},
+                            authors: item.authors ? item.authors : [],
+                            imageLinks: item.imageLinks ? item.imageLinks : {smallThumbnail: ''},
                             shelf: this.getTheShelf(item)
                         }
                     })
@@ -82,10 +82,23 @@ export default class SearchBooks extends Component {
 
                     </div>
                 </div>
-                <div className="search-books-results">
-                    <BooksGrid books={this.state.books}
-                               onChangeShelf={this.props.onChangeShelf}/>
-                </div>
+                {
+                    this.state.books && this.state.books.length > 0 &&
+                    <div className="search-books-results">
+                        <BooksGrid books={this.state.books}
+                                   onChangeShelf={this.props.onChangeShelf}/>
+                    </div>
+                }
+                {
+                    this.state.books.length === 0 &&
+                    <div className="warning-msg">
+                        <i className="fa fa-warning"></i>
+                        No result for for the search criteria.
+                    </div>
+                }
+
+
+
             </div>
         )
     }
